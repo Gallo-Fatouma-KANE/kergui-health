@@ -15,7 +15,7 @@ const Admin = {
       );
     });
   },
-
+  
   // Trouver un admin par email
   findByEmail: (email) => {
     return new Promise((resolve, reject) => {
@@ -25,7 +25,7 @@ const Admin = {
       });
     });
   },
-
+  
   // Trouver un admin par ID
   findById: (id) => {
     return new Promise((resolve, reject) => {
@@ -35,7 +35,28 @@ const Admin = {
       });
     });
   },
-
+  
+  // Mettre à jour un admin
+  update: (id, updateData) => {
+    return new Promise((resolve, reject) => {
+      // Extraire les paires clé-valeur des données à mettre à jour
+      const keys = Object.keys(updateData);
+      const values = Object.values(updateData);
+      
+      // Créer la partie SET de la requête SQL
+      const setClause = keys.map(key => `${key} = ?`).join(', ');
+      
+      global.db.query(
+        `UPDATE admin SET ${setClause} WHERE id = ?`,
+        [...values, id],
+        (err, result) => {
+          if (err) reject(err);
+          else resolve(result);
+        }
+      );
+    });
+  },
+  
   // Supprimer un admin par ID
   deleteById: (id) => {
     return new Promise((resolve, reject) => {
@@ -45,7 +66,7 @@ const Admin = {
       });
     });
   },
-
+  
   // Voir tous les admins
   findAll: () => {
     return new Promise((resolve, reject) => {
@@ -54,6 +75,11 @@ const Admin = {
         else resolve(results);
       });
     });
+  },
+  
+  // Vérifier le mot de passe d'un admin
+  checkPassword: async (plainPassword, hashedPassword) => {
+    return await bcrypt.compare(plainPassword, hashedPassword);
   }
 };
 

@@ -5,6 +5,7 @@ const proController = require('../controllers/proController');
 const authController = require('../controllers/authController');
 const messageController = require('../controllers/messageController');
 const adminController = require('../controllers/adminController');
+const rdvController = require('../controllers/rdvController');
 // Routes patient
 router.post('/patient/register', patientController.register);
 router.post('/patient/login', patientController.login);
@@ -26,5 +27,14 @@ router.delete('/professionnels/:id', adminController.deleteProfessional);
 router.post('/admins', adminController.addAdmin);
 // Supprimer un admin
 router.delete('/admins/:id', adminController.deleteAdmin);
+// Route POST pour prendre un rendez-vous
+router.post('/rendezvous', rdvController.prendreRendezVous);
+router.post('/check-disponibilite', rdvController.checkAvailability);
+// Routes pour les professionnels
+router.get('/professionnels/:professionnel_id/rendez-vous', rdvController.getRendezVousByProfessionnel);
+router.get('/rendez-vous/:rdv_id', rdvController.getRendezVousDetail);
+router.put('/rendez-vous/:rdv_id/reprogrammer', rdvController.reprogrammerRendezVous);
+router.delete('/rendez-vous/:rdv_id', rdvController.annulerRendezVous);
+router.get('/professionnels/:professionnel_id/disponibilites/:date', rdvController.getDisponibilitesProfessionnel);
 
 module.exports = router;

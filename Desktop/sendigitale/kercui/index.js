@@ -3,6 +3,7 @@ const cors = require('cors');
 const mysql = require('mysql2');
 require('dotenv').config();
 const routes = require('./routes/index');
+const recommendRoute = require('./routes/recommend');
 
 const app = express();
 app.use(cors());
@@ -28,6 +29,7 @@ db.connect((err) => {
 
 // Utiliser les routes
 app.use('/', routes);
+app.use('/', recommendRoute);
 
 // Démarrage serveur
 const PORT = process.env.PORT || 3000;

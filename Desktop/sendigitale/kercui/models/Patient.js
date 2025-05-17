@@ -1,15 +1,52 @@
-const mysql = require('mysql2');
+const { DataTypes } = require('sequelize');
+// const sequelize = require('../config/database');
 
-const patientSchema = new mongoose.Schema({
-  nom: String,
-  prenom: String,
-  name: String,
-  email: { type: String, unique: true },
-  date_naissance: date_naissance,
-  sexe: String,
-  adresse: String,
-  telephone: String,
-  password: String
+const Patient = sequelize.define('Patient', {
+  nom: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  prenom: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  date_naissance: {
+    type: DataTypes.DATEONLY,
+    allowNull: false
+  },
+  sexe: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  adresse: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  telephone: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  numero_dossier: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  date_enregistrement: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
+}, {
+  tableName: 'patients',
+  timestamps: false
 });
 
-module.exports = mongoose.model('Patient', patientSchema);
+module.exports = Patient;

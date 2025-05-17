@@ -1,18 +1,44 @@
-const mysql = require('mysql2');
+const { DataTypes } = require('sequelize');
+const sequelize = require('./index');
 
-const proSchema = new mongoose.Schema({
-  nom: String,
-  prenom: String,
-  email: { type: String, unique: true },
-  password: String,
-  speciality: String,
-  phone: String,
-  profession: String,
-  adresse: String,
+const Professionnel = sequelize.define('Professionnel', {
+  nom: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  prenom: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  password: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  speciality: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  phone: {
+    type: DataTypes.STRING,
+  },
+  profession: {
+    type: DataTypes.STRING,
+  },
+  adresse: {
+    type: DataTypes.STRING,
+  },
   createdAt: {
-    type: Date,
-    default: Date.now
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
   }
+}, {
+  tableName: 'professionnels', // Nom réel de la table
+  timestamps: false, // Sinon Sequelize crée aussi updatedAt
 });
 
-module.exports = mongoose.model('Pro', proSchema);
+module.exports = Professionnel;
