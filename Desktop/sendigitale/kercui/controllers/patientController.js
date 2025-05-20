@@ -19,7 +19,7 @@ exports.register = async (req, res) => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const numero_dossier = `DOS-${Date.now()}`; // Exemple de génération d’un numéro de dossier
+    const numero_dossier = `DOS-${Date.now()}`; 
     const date_enregistrement = new Date();
 
     const sql = `
